@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Loumi Residences — Live local. Stay longer. Cascais.</title>
+<meta name="description" content="The Loumi Residences — boutique mid-term stays in Cascais, Portugal.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sand: #ece3d3;
+    --sand-deep: #ddccaf;
+    --terracotta: #c1572d;
+    --terracotta-deep: #9c4322;
+    --ocean: #1f3b3d;
+    --ocean-deep: #142628;
+    --cream: #faf6ee;
+    --ink: #241d16;
+    --line: rgba(36,29,22,0.14);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Manrope', sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.serif{ font-family:'Fraunces', serif; font-weight:500; letter-spacing:-0.01em; }
+  a{color:inherit; text-decoration:none;}
+
+  .noise{
+    position:fixed; inset:0; pointer-events:none; z-index:9999;
+    opacity:0.035; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- NAV (sticky, centered, luxury-minimal) ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:1000;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 22px 5vw;
+    background: rgba(250,246,238,0.0);
+    transition: background .4s ease, padding .4s ease, box-shadow .4s ease;
+  }
+  nav.scrolled{
+    background: rgba(250,246,238,0.92);
+    backdrop-filter: blur(10px);
+    padding: 16px 5vw;
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .nav-mark{
+    font-family:'Fraunces', serif; font-size:1rem; letter-spacing:0.1em; text-transform:uppercase;
+    color: var(--cream); transition: color .4s ease;
+  }
+  nav.scrolled .nav-mark{ color: var(--ink); }
+  .nav-links{ display:none; gap:40px; font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--cream); transition:color .4s ease;}
+  nav.scrolled .nav-links{ color: var(--ink); }
+  @media(min-width:780px){ .nav-links{display:flex;} }
+  .nav-links a{ opacity:0.85; transition:opacity .3s; }
+  .nav-links a:hover{ opacity:1; }
+  .nav-enq{
+    font-size:0.74rem; letter-spacing:0.1em; text-transform:uppercase;
+    border:1px solid rgba(250,246,238,0.5); padding:10px 22px; border-radius:30px;
+    color:var(--cream); transition: all .4s ease;
+  }
+  nav.scrolled .nav-enq{ border-color: var(--ink); color: var(--ink); }
+  .nav-enq:hover{ background:var(--cream); color:var(--ink) !important; border-color:var(--cream) !important; }
+
+  /* ---------- HERO — full-bleed, centered, luxury style ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding: 0 6vw;
+    background:
+      radial-gradient(circle at 50% 20%, rgba(193,87,45,0.22), transparent 50%),
+      linear-gradient(160deg, rgba(31,59,61,0.88) 0%, rgba(20,38,40,0.92) 55%, rgba(13,28,29,0.95) 100%),
+      url('img/hero.png');
+    background-size: cover;
+    background-position: center 30%;
+    background-blend-mode: normal, normal, luminosity;
+    color: var(--cream);
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image: repeating-linear-gradient(115deg, rgba(255,255,255,0.045) 0px, rgba(255,255,255,0.045) 1px, transparent 1px, transparent 64px);
+    pointer-events:none;
+  }
+  .hero-eyebrow{
+    font-size:0.78rem; letter-spacing:0.24em; text-transform:uppercase;
+    color: #e6b08c; margin-bottom:30px;
+    opacity:0; animation: rise 0.9s 0.2s forwards ease-out;
+  }
+  .hero h1{
+    font-size: clamp(2.6rem, 7.2vw, 5.8rem);
+    line-height: 1.02;
+    max-width: 22ch;
+    opacity:0; animation: rise 1s 0.35s forwards ease-out;
+  }
+  .hero h1 em{ font-style:italic; color:var(--terracotta); font-weight:400; }
+  .hero-sub{
+    margin-top:30px; max-width:560px; font-size:1.08rem; line-height:1.65;
+    color: rgba(250,246,238,0.78);
+    opacity:0; animation: rise 1s 0.5s forwards ease-out;
+  }
+  .hero-cta{
+    margin-top:46px; display:flex; gap:18px; flex-wrap:wrap; justify-content:center;
+    opacity:0; animation: rise 1s 0.65s forwards ease-out;
+  }
+  @keyframes rise{ from{opacity:0; transform:translateY(24px);} to{opacity:1; transform:translateY(0);} }
+
+  .scroll-cue{
+    position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:12px;
+    font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase;
+    color: rgba(250,246,238,0.55);
+  }
+  .scroll-cue .line{width:1px; height:40px; background:rgba(250,246,238,0.4); position:relative; overflow:hidden;}
+  .scroll-cue .line::after{
+    content:""; position:absolute; top:-100%; left:0; width:100%; height:100%;
+    background:var(--terracotta); animation: drip 2.2s infinite ease-in-out;
+  }
+  @keyframes drip{ 0%{top:-100%;} 50%{top:0%;} 100%{top:100%;} }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{ padding: 8vw 6vw; position:relative; }
+  .section-head{ text-align:center; max-width:680px; margin:0 auto 5vw; }
+  .label{
+    font-size:0.76rem; letter-spacing:0.22em; text-transform:uppercase;
+    color: var(--terracotta-deep);
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    margin-bottom:20px;
+  }
+  .label::before, .label::after{content:""; width:30px; height:1px; background:var(--terracotta);}
+  .section-head h2{ font-size:clamp(2rem,4.4vw,3.4rem); line-height:1.1; }
+  .section-head p{ margin-top:20px; font-size:1.05rem; line-height:1.65; color:#4a4136; }
+
+  /* ---------- INTRO / OVERVIEW (mirrors "Residences Overview") ---------- */
+  .overview{ background:var(--cream); }
+  .overview-inner{ max-width:760px; margin:0 auto; text-align:center; }
+  .overview-inner p{ font-size:1.2rem; line-height:1.75; color:#3c352a; font-family:'Fraunces',serif; font-weight:400; }
+  .overview-inner p em{ font-style:italic; color:var(--terracotta-deep); }
+  .stat-row{ display:flex; gap:8vw; margin-top:56px; justify-content:center; flex-wrap:wrap; }
+  .stat{ text-align:center; }
+  .stat strong{ display:block; font-family:'Fraunces',serif; font-size:2.6rem; color:var(--ocean); font-weight:500; }
+  .stat span{ font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; color:#7a6f5e; }
+
+  /* ---------- RESORT-STYLE DISCOVERY GRID ---------- */
+  .properties{ background: var(--sand); }
+  .prop-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  @media(max-width:900px){ .prop-grid{grid-template-columns:1fr; max-width:480px; margin:0 auto;} }
+
+  .prop-card{
+    display:block;
+    background: var(--cream);
+    border-radius: 4px;
+    overflow:hidden;
+    transition: transform .4s ease, box-shadow .4s ease;
+    box-shadow: 0 10px 30px rgba(36,29,22,0.06);
+  }
+  .prop-card:hover{ transform: translateY(-8px); box-shadow:0 24px 50px rgba(36,29,22,0.14); }
+  .prop-media{
+    aspect-ratio: 4/5; position:relative; overflow:hidden;
+    background: linear-gradient(135deg, var(--sand-deep), var(--sand) 60%);
+    display:flex; align-items:flex-end; padding:22px;
+  }
+  .prop-media::before{
+    content:""; position:absolute; inset:0;
+    background-image: repeating-linear-gradient(45deg, rgba(36,29,22,0.05) 0, rgba(36,29,22,0.05) 2px, transparent 2px, transparent 14px);
+  }
+  .prop-media::after{
+    content:"Image coming soon"; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase;
+    color: rgba(36,29,22,0.4); position:relative; z-index:1;
+  }
+  .prop-media.photo{ background-size:cover; background-position:center; }
+  .prop-media.photo::before, .prop-media.photo::after{ content:none; }
+  .prop-tag{
+    position:absolute; top:18px; left:18px; z-index:2;
+    font-size:0.66rem; letter-spacing:0.1em; text-transform:uppercase;
+    padding:5px 12px; border-radius:30px;
+    background: rgba(250,246,238,0.9); color: var(--ink);
+  }
+  .prop-tag.live{ background: var(--terracotta); color:var(--cream); }
+  .prop-body{ padding: 26px 26px 30px; }
+  .prop-body .prop-loc{ font-size:0.74rem; letter-spacing:0.1em; text-transform:uppercase; color:#9c9183; }
+  .prop-body h3{ font-size:1.6rem; margin-top:10px; }
+  .prop-body .prop-desc{ font-size:0.9rem; line-height:1.55; color:#5a5042; margin-top:10px; }
+  .prop-foot{ display:flex; justify-content:space-between; align-items:center; margin-top:22px; padding-top:18px; border-top:1px solid var(--line); }
+  .prop-foot span{ font-size:0.78rem; letter-spacing:0.04em; color: var(--ocean); font-weight:600; }
+  .prop-arrow{ font-size:1.2rem; color:var(--terracotta); transition: transform .35s ease; }
+  .prop-card:hover .prop-arrow{ transform:translateX(6px); }
+
+  /* ---------- BENEFITS / "INVESTMENT-STYLE" STRIP ---------- */
+  .benefits{ background: var(--ocean); color: var(--cream); }
+  .benefits .label{ color:#e6b08c; }
+  .benefits .label::before, .benefits .label::after{ background:#e6b08c; }
+  .benefits .section-head h2{ color:var(--cream); }
+  .benefit-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:48px; max-width:1000px; margin:0 auto; }
+  @media(max-width:860px){ .benefit-grid{grid-template-columns:1fr; gap:40px;} }
+  .benefit-item{ text-align:center; }
+  .benefit-num{ font-family:'Fraunces',serif; font-size:1rem; color:#e6b08c; letter-spacing:0.08em; }
+  .benefit-item h3{ font-size:1.5rem; margin-top:16px; }
+  .benefit-item p{ font-size:0.92rem; line-height:1.6; color:rgba(250,246,238,0.68); margin-top:12px; max-width:30ch; margin-inline:auto; }
+
+  /* ---------- GALLERY STRIP ---------- */
+  .gallery{ background:var(--cream); }
+  .gallery-strip{ display:grid; grid-template-columns: repeat(4,1fr); gap:14px; }
+  @media(max-width:760px){ .gallery-strip{grid-template-columns:repeat(2,1fr);} }
+  .swatch{
+    aspect-ratio:3/4; border-radius:2px; position:relative; overflow:hidden;
+    background: linear-gradient(135deg, var(--sand-deep), var(--sand) 60%);
+    display:flex; align-items:flex-end; padding:20px;
+  }
+  .swatch::before{ content:""; position:absolute; inset:0; background-image: repeating-linear-gradient(45deg, rgba(36,29,22,0.05) 0, rgba(36,29,22,0.05) 2px, transparent 2px, transparent 14px); }
+  .swatch::after{ content:"Image coming soon"; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color: rgba(36,29,22,0.4); position:relative; z-index:1; }
+  .swatch.photo{ background-size:cover; background-position:center; }
+  .swatch.photo::before, .swatch.photo::after{ content:none; }
+  .gallery-strip .swatch:nth-child(2){ transform:translateY(28px); }
+  .gallery-strip .swatch:nth-child(4){ transform:translateY(-12px); }
+
+  /* ---------- STORY / ABOUT ---------- */
+  .story{ background: var(--sand); }
+  .story-grid{ display:grid; grid-template-columns: 0.9fr 1.1fr; gap:7vw; align-items:center; max-width:1100px; margin:0 auto; }
+  @media(max-width:860px){ .story-grid{grid-template-columns:1fr;} }
+  .story-grid .swatch{ aspect-ratio:4/5; }
+  .story-text h2{ font-size:clamp(2rem,4vw,2.8rem); line-height:1.15; max-width:14ch; }
+  .story-text p{ margin-top:24px; font-size:1.02rem; line-height:1.75; color:#4a4136; }
+
+  /* ---------- REVIEWS ---------- */
+  .reviews{ background: var(--cream); }
+  .review-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:40px; max-width:1100px; margin:0 auto; }
+  @media(max-width:860px){ .review-grid{grid-template-columns:1fr;} }
+  .review-card{ text-align:center; padding-top:0; }
+  .review-stars{ color:var(--terracotta); font-size:1rem; letter-spacing:3px; margin-bottom:18px;}
+  .review-card p{ font-family:'Fraunces',serif; font-size:1.15rem; line-height:1.55; font-style:italic; }
+  .review-who{ margin-top:20px; font-size:0.78rem; letter-spacing:0.06em; text-transform:uppercase; color:#6e6353; }
+
+  /* ---------- CTA / ENQUIRE ---------- */
+  .cta{
+    background: linear-gradient(150deg, var(--terracotta) 0%, var(--terracotta-deep) 100%);
+    color: var(--cream); text-align:center; padding: 10vw 6vw; position:relative; overflow:hidden;
+  }
+  .cta::before{
+    content:""; position:absolute; width:120%; height:200%; top:-50%; left:-10%;
+    background: radial-gradient(circle, rgba(255,255,255,0.12), transparent 60%);
+    pointer-events:none;
+  }
+  .cta-actions{ position:relative; z-index:1; }
+  .cta-eyebrow{ font-size:0.78rem; letter-spacing:0.22em; text-transform:uppercase; opacity:0.85; margin-bottom:20px;}
+  .cta h2{ font-size:clamp(2.2rem,5.6vw,4rem); max-width:18ch; margin:0 auto; line-height:1.1;}
+  .cta p{ margin:24px auto 0; max-width:42ch; color:rgba(250,246,238,0.85); line-height:1.6; }
+  .btn{
+    display:inline-flex; align-items:center; gap:14px; margin-top:44px;
+    background: var(--cream); color: var(--terracotta-deep);
+    padding: 18px 38px; border-radius: 100px; font-weight:600; font-size:0.92rem; letter-spacing:0.02em;
+    transition: transform .3s ease, box-shadow .3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  }
+  .btn:hover{ transform: translateY(-3px); box-shadow:0 16px 40px rgba(0,0,0,0.25); }
+  .btn span{ transition:transform .3s ease; }
+  .btn:hover span{ transform:translateX(4px); }
+  .btn-ghost{
+    display:inline-flex; align-items:center; gap:14px; margin-top:44px;
+    border:1px solid rgba(250,246,238,0.5); color:var(--cream);
+    padding:18px 38px; border-radius:100px; font-weight:600; font-size:0.92rem; letter-spacing:0.02em;
+    transition: all .3s ease;
+  }
+  .btn-ghost:hover{ background:rgba(250,246,238,0.12); }
+  .cta-actions{ display:flex; gap:18px; justify-content:center; flex-wrap:wrap; }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background: var(--ocean-deep); color: rgba(250,246,238,0.6);
+    padding: 5vw 6vw 3vw; display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; font-size:0.85rem;
+  }
+  footer .f-mark{ font-family:'Fraunces',serif; color:var(--cream); font-size:1.2rem; }
+  .f-links{ display:flex; gap:28px; flex-wrap:wrap; }
+  .f-links a{ opacity:0.75; transition:opacity .3s; }
+  .f-links a:hover{ opacity:1; color:#e6b08c; }
+  .f-bottom{ width:100%; margin-top:36px; padding-top:24px; border-top:1px solid rgba(250,246,238,0.1); font-size:0.75rem; opacity:0.5; }
+
+  [data-reveal]{ opacity:0; transform:translateY(30px); transition: opacity .8s ease, transform .8s ease; }
+  [data-reveal].in{ opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+
+<nav id="nav">
+  <div class="nav-mark">THE LOUMI RESIDENCES</div>
+  <div class="nav-links">
+    <a href="#overview">About</a>
+    <a href="#propriedades">Residences</a>
+    <a href="#reviews">Reviews</a>
+  </div>
+  <a class="nav-enq" href="#contacto">Book Now</a>
+</nav>
+
+<header class="hero" id="home">
+  <div class="hero-eyebrow">Real Estate Developer — Cascais, Portugal</div>
+  <h1>Live local. <em>Stay longer.</em></h1>
+  <p class="hero-sub">Residences carefully designed for mid-term stays — where Cascais' neighbourhood life becomes your stay.</p>
+  <div class="hero-cta">
+    <a class="btn" href="https://www.booking.com/hotel/pt/cozy-studio-near-the-beach.en-gb.html" target="_blank" rel="noopener">Book the Studio <span>→</span></a>
+    <a class="btn-ghost" href="#propriedades">View Residences</a>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><div class="line"></div></div>
+</header>
+
+<section class="overview" id="overview">
+  <div class="overview-inner" data-reveal>
+    <span class="label">About Loumi</span>
+    <p>The Loumi Residences creates <em>spaces that stay with you</em> — studios and residences designed for those who want to live Cascais like a local, not just visit it. Each space is a curation of comfort, location and character, available for mid-term stays.</p>
+    <div class="stat-row">
+      <div class="stat"><strong>18</strong><span>Posts</span></div>
+      <div class="stat"><strong>3</strong><span>Curated residences</span></div>
+      <div class="stat"><strong>125+</strong><span>Instagram community</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="properties" id="propriedades">
+  <div class="section-head" data-reveal>
+    <span class="label">Residences</span>
+    <h2>Three spaces, one way of living.</h2>
+    <p>From immediate availability to upcoming projects — discover Loumi's residences in Cascais.</p>
+  </div>
+  <div class="prop-grid">
+    <a class="prop-card" data-reveal href="https://www.booking.com/hotel/pt/cozy-studio-near-the-beach.en-gb.html" target="_blank" rel="noopener">
+      <div class="prop-media photo" style="background-image:url('img/studio-card.png');">
+        <span class="prop-tag live">Available</span>
+      </div>
+      <div class="prop-body">
+        <div class="prop-loc">Cascais, Portugal</div>
+        <h3>Studio</h3>
+        <p class="prop-desc">Cozy studio near the beach — ready for immediate booking via Booking.com.</p>
+        <div class="prop-foot">
+          <span>Book now</span>
+          <span class="prop-arrow">→</span>
+        </div>
+      </div>
+    </a>
+    <div class="prop-card" data-reveal>
+      <div class="prop-media photo" style="background-image:url('img/avilez-card.png');">
+        <span class="prop-tag">Under construction 🚧</span>
+      </div>
+      <div class="prop-body">
+        <div class="prop-loc">Cascais, Portugal</div>
+        <h3>Avilez</h3>
+        <p class="prop-desc">A new Loumi residence, coming soon for mid-term stays.</p>
+        <div class="prop-foot">
+          <span>Coming soon</span>
+          <span class="prop-arrow">→</span>
+        </div>
+      </div>
+    </div>
+    <div class="prop-card" data-reveal>
+      <div class="prop-media photo" style="background-image:url('img/minas-card.png');">
+        <span class="prop-tag">Under construction 🚧</span>
+      </div>
+      <div class="prop-body">
+        <div class="prop-loc">Cascais, Portugal</div>
+        <h3>Minas</h3>
+        <p class="prop-desc">A new Loumi residence, coming soon for mid-term stays.</p>
+        <div class="prop-foot">
+          <span>Coming soon</span>
+          <span class="prop-arrow">→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="benefits">
+  <div class="section-head" data-reveal>
+    <span class="label">Why Loumi</span>
+    <h2>Designed for those who stay.</h2>
+  </div>
+  <div class="benefit-grid">
+    <div class="benefit-item" data-reveal>
+      <div class="benefit-num">01</div>
+      <h3>Local location</h3>
+      <p>In the heart of Cascais, close to the beach and neighbourhood life — not in isolated tourist zones.</p>
+    </div>
+    <div class="benefit-item" data-reveal>
+      <div class="benefit-num">02</div>
+      <h3>Flexible stays</h3>
+      <p>Designed for mid-term stays, with the comfort and routine of a real home.</p>
+    </div>
+    <div class="benefit-item" data-reveal>
+      <div class="benefit-num">03</div>
+      <h3>Curated spaces</h3>
+      <p>Every residence is designed in detail — natural materials, light and functionality.</p>
+    </div>
+  </div>
+</section>
+
+<section class="gallery">
+  <div class="gallery-strip">
+    <div class="swatch photo" data-reveal style="background-image:url('img/gallery-1.png');"></div>
+    <div class="swatch photo" data-reveal style="background-image:url('img/gallery-2.png');"></div>
+    <div class="swatch photo" data-reveal style="background-image:url('img/gallery-3.png');"></div>
+    <div class="swatch photo" data-reveal style="background-image:url('img/gallery-4.png');"></div>
+  </div>
+</section>
+
+<section class="story">
+  <div class="story-grid">
+    <div class="swatch photo" data-reveal style="background-image:url('img/story.png');"></div>
+    <div class="story-text" data-reveal>
+      <span class="label" style="justify-content:flex-start;">Our Story</span>
+      <h2>Built in Cascais, for those who love Cascais.</h2>
+      <p>Loumi was born from the idea that travelling shouldn't mean putting life on hold. Every residence is designed for those who want to stay longer, feel the city like a local, and come home every day — even when far from their own.</p>
+      <p>From selecting the spaces to curating every detail, Loumi is building a small collection of residences in Cascais, with the Studio already available and Avilez and Minas on the way.</p>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <div class="section-head" data-reveal>
+    <span class="label">Guests</span>
+    <h2>Reviews that confirm the experience.</h2>
+  </div>
+  <div class="review-grid">
+    <div class="review-card" data-reveal>
+      <div class="review-stars">★★★★★</div>
+      <p>"A welcoming space, exactly like home — but with the sea two steps away."</p>
+      <div class="review-who">Guest — Studio</div>
+    </div>
+    <div class="review-card" data-reveal>
+      <div class="review-stars">★★★★★</div>
+      <p>"The location and comfort make all the difference for a longer stay."</p>
+      <div class="review-who">Guest — Studio</div>
+    </div>
+    <div class="review-card" data-reveal>
+      <div class="review-stars">★★★★★</div>
+      <p>"We felt part of the neighbourhood, not just passing guests."</p>
+      <div class="review-who">Guest — Studio</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contacto">
+  <div class="cta-eyebrow">Available for mid-term stays</div>
+  <h2>Reserve your place in Cascais.</h2>
+  <p>The Studio is available now through Booking.com. The Avilez and Minas residences are coming soon.</p>
+  <div class="cta-actions">
+    <a class="btn" href="https://www.booking.com/hotel/pt/cozy-studio-near-the-beach.en-gb.html" target="_blank" rel="noopener">Book on Booking.com <span>→</span></a>
+    <a class="btn-ghost" href="https://www.instagram.com/theloumiresidences/" target="_blank" rel="noopener">Follow on Instagram</a>
+  </div>
+</section>
+
+<footer>
+  <div class="f-mark">THE LOUMI RESIDENCES</div>
+  <div class="f-links">
+    <a href="https://www.instagram.com/theloumiresidences/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.booking.com/hotel/pt/cozy-studio-near-the-beach.en-gb.html" target="_blank" rel="noopener">Booking.com</a>
+    <a href="#overview">About</a>
+    <a href="#propriedades">Residences</a>
+  </div>
+  <div class="f-bottom">© 2026 The Loumi Residences — Cascais, Portugal.</div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
+  }, {threshold:0.15});
+  revealEls.forEach(el=>obs.observe(el));
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', ()=>{
+    if(window.scrollY > 40){ nav.classList.add('scrolled'); }
+    else{ nav.classList.remove('scrolled'); }
+  });
+</script>
+
+</body>
+</html>
