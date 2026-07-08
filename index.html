@@ -154,7 +154,7 @@
 
   /* ---------- RESORT-STYLE DISCOVERY GRID ---------- */
   .properties{ background: var(--sand); }
-  .prop-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .prop-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; align-items:start; }
   @media(max-width:900px){ .prop-grid{grid-template-columns:1fr; max-width:480px; margin:0 auto;} }
 
   .prop-card{
@@ -196,6 +196,21 @@
   .prop-foot span{ font-size:0.78rem; letter-spacing:0.04em; color: var(--ocean); font-weight:600; }
   .prop-arrow{ font-size:1.2rem; color:var(--terracotta); transition: transform .35s ease; }
   .prop-card:hover .prop-arrow{ transform:translateX(6px); }
+  .prop-amenities{ margin-top:20px; padding-top:18px; border-top:1px solid var(--line); }
+  .amenity-group{ margin-bottom:14px; }
+  .amenity-group:last-child{ margin-bottom:0; }
+  .amenity-group-label{ display:block; font-size:0.66rem; letter-spacing:0.1em; text-transform:uppercase; color:#9c9183; margin-bottom:8px; }
+  .amenity-pills{ display:flex; flex-wrap:wrap; gap:6px; }
+  .amenity-pills span{ font-size:0.72rem; padding:5px 12px; border-radius:20px; background:var(--sand); color:#5a5042; border:1px solid var(--line); }
+  .prop-book-links{ display:flex; gap:10px; margin-top:22px; padding-top:18px; border-top:1px solid var(--line); }
+  .prop-book-btn{
+    flex:1; text-align:center; font-size:0.72rem; letter-spacing:0.04em; font-weight:600;
+    padding:11px 10px; border-radius:100px; transition: all .25s ease;
+  }
+  .prop-book-btn.booking{ background: var(--ocean); color: var(--cream); }
+  .prop-book-btn.booking:hover{ background: var(--ocean-deep); }
+  .prop-book-btn.airbnb{ background: #FF385C; color: var(--cream); }
+  .prop-book-btn.airbnb:hover{ background: #e0304f; }
 
   /* ---------- BENEFITS / "INVESTMENT-STYLE" STRIP ---------- */
   .benefits{ background: var(--ocean); color: var(--cream); }
@@ -258,7 +273,7 @@
   .cta p{ margin:24px auto 0; max-width:42ch; color:rgba(250,246,238,0.85); line-height:1.6; }
   .btn{
     display:inline-flex; align-items:center; gap:14px; margin-top:44px;
-    background: var(--cream); color: var(--terracotta-deep);
+    background: var(--cream); color: #003580;
     padding: 18px 38px; border-radius: 100px; font-weight:600; font-size:0.92rem; letter-spacing:0.02em;
     transition: transform .3s ease, box-shadow .3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.18);
   }
@@ -272,6 +287,15 @@
     transition: all .3s ease;
   }
   .btn-ghost:hover{ background:rgba(250,246,238,0.12); }
+  .btn-airbnb{
+    display:inline-flex; align-items:center; gap:14px; margin-top:44px;
+    background: var(--cream); color: #FF385C;
+    padding: 18px 38px; border-radius: 100px; font-weight:600; font-size:0.92rem; letter-spacing:0.02em;
+    transition: transform .3s ease, box-shadow .3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  }
+  .btn-airbnb:hover{ transform: translateY(-3px); box-shadow:0 16px 40px rgba(0,0,0,0.25); }
+  .btn-airbnb span{ transition:transform .3s ease; }
+  .btn-airbnb:hover span{ transform:translateX(4px); }
   .cta-actions{ display:flex; gap:18px; justify-content:center; flex-wrap:wrap; }
 
   /* ---------- FOOTER ---------- */
@@ -308,7 +332,8 @@
   <h1>Live local. <em>Stay longer.</em></h1>
   <p class="hero-sub">Residences carefully designed for mid-term stays — where Cascais' neighbourhood life becomes your stay.</p>
   <div class="hero-cta">
-    <a class="btn" href="https://www.booking.com/hotel/pt/cozy-studio-near-the-beach.en-gb.html" target="_blank" rel="noopener">Book the Studio <span>→</span></a>
+    <a class="btn" href="https://www.booking.com/hotel/pt/cozy-studio-near-the-beach.en-gb.html" target="_blank" rel="noopener">Book on Booking.com <span>→</span></a>
+    <a class="btn-airbnb" href="https://www.airbnb.com/rooms/1508035509890961049" target="_blank" rel="noopener">Book on Airbnb <span>→</span></a>
     <a class="btn-ghost" href="#propriedades">View Residences</a>
   </div>
   <div class="scroll-cue"><span>Scroll</span><div class="line"></div></div>
@@ -333,20 +358,52 @@
     <p>From immediate availability to upcoming projects — discover Loumi's residences in Cascais.</p>
   </div>
   <div class="prop-grid">
-    <a class="prop-card" data-reveal href="https://www.booking.com/hotel/pt/cozy-studio-near-the-beach.en-gb.html" target="_blank" rel="noopener">
+    <div class="prop-card" data-reveal>
       <div class="prop-media photo" style="background-image:url('img/studio-card.png');">
         <span class="prop-tag live">Available</span>
       </div>
       <div class="prop-body">
         <div class="prop-loc">Cascais, Portugal</div>
         <h3>Studio</h3>
-        <p class="prop-desc">Cozy studio near the beach — ready for immediate booking via Booking.com.</p>
-        <div class="prop-foot">
-          <span>Book now</span>
-          <span class="prop-arrow">→</span>
+        <p class="prop-desc">Cozy studio near the beach — ready for immediate booking via Booking.com or Airbnb.</p>
+        <div class="prop-amenities">
+          <div class="amenity-group">
+            <span class="amenity-group-label">Kitchen &amp; dining</span>
+            <div class="amenity-pills">
+              <span>Kitchen</span><span>Cooking basics</span><span>Dishes &amp; silverware</span><span>Mini fridge</span><span>Stove</span><span>Coffee maker</span><span>Wine glasses</span><span>Toaster</span>
+            </div>
+          </div>
+          <div class="amenity-group">
+            <span class="amenity-group-label">Bathroom</span>
+            <div class="amenity-pills">
+              <span>Hair dryer</span><span>Body soap</span><span>Hot water</span>
+            </div>
+          </div>
+          <div class="amenity-group">
+            <span class="amenity-group-label">Bedroom &amp; laundry</span>
+            <div class="amenity-pills">
+              <span>Hangers</span><span>Bed linens</span><span>Room-darkening shades</span>
+            </div>
+          </div>
+          <div class="amenity-group">
+            <span class="amenity-group-label">Climate &amp; entertainment</span>
+            <div class="amenity-pills">
+              <span>Air conditioning</span><span>TV</span>
+            </div>
+          </div>
+          <div class="amenity-group">
+            <span class="amenity-group-label">Safety &amp; connectivity</span>
+            <div class="amenity-pills">
+              <span>Wifi</span><span>Fire extinguisher</span><span>First aid kit</span>
+            </div>
+          </div>
+        </div>
+        <div class="prop-book-links">
+          <a class="prop-book-btn booking" href="https://www.booking.com/hotel/pt/cozy-studio-near-the-beach.en-gb.html" target="_blank" rel="noopener">Booking.com</a>
+          <a class="prop-book-btn airbnb" href="https://www.airbnb.com/rooms/1508035509890961049" target="_blank" rel="noopener">Airbnb</a>
         </div>
       </div>
-    </a>
+    </div>
     <div class="prop-card" data-reveal>
       <div class="prop-media photo" style="background-image:url('img/avilez-card.png');">
         <span class="prop-tag">Under construction 🚧</span>
@@ -450,9 +507,10 @@
 <section class="cta" id="contacto">
   <div class="cta-eyebrow">Available for mid-term stays</div>
   <h2>Reserve your place in Cascais.</h2>
-  <p>The Studio is available now through Booking.com. The Avilez and Minas residences are coming soon.</p>
+  <p>The Studio is available now through Booking.com or Airbnb. The Avilez and Minas residences are coming soon.</p>
   <div class="cta-actions">
     <a class="btn" href="https://www.booking.com/hotel/pt/cozy-studio-near-the-beach.en-gb.html" target="_blank" rel="noopener">Book on Booking.com <span>→</span></a>
+    <a class="btn-airbnb" href="https://www.airbnb.com/rooms/1508035509890961049" target="_blank" rel="noopener">Book on Airbnb <span>→</span></a>
     <a class="btn-ghost" href="https://www.instagram.com/theloumiresidences/" target="_blank" rel="noopener">Follow on Instagram</a>
   </div>
 </section>
@@ -462,6 +520,7 @@
   <div class="f-links">
     <a href="https://www.instagram.com/theloumiresidences/" target="_blank" rel="noopener">Instagram</a>
     <a href="https://www.booking.com/hotel/pt/cozy-studio-near-the-beach.en-gb.html" target="_blank" rel="noopener">Booking.com</a>
+    <a href="https://www.airbnb.com/rooms/1508035509890961049" target="_blank" rel="noopener">Airbnb</a>
     <a href="#overview">About</a>
     <a href="#propriedades">Residences</a>
   </div>
