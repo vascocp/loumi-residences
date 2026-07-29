@@ -212,6 +212,22 @@
   .prop-book-btn.airbnb{ background: #FF385C; color: var(--cream); }
   .prop-book-btn.airbnb:hover{ background: #e0304f; }
 
+  /* ---------- VIDEO TOUR ---------- */
+  .video-tour{ background: var(--ocean-deep); color: var(--cream); }
+  .video-tour .label{ color:#e6b08c; }
+  .video-tour .label::before, .video-tour .label::after{ background:#e6b08c; }
+  .video-tour .section-head h2{ color:var(--cream); }
+  .video-tour .section-head p{ color:rgba(250,246,238,0.65); }
+  .video-wrap{
+    max-width: 900px; margin: 0 auto; border-radius:6px; overflow:hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    position:relative;
+  }
+  .video-wrap video{
+    width:100%; display:block;
+    background:#000;
+  }
+
   /* ---------- BENEFITS / "INVESTMENT-STYLE" STRIP ---------- */
   .benefits{ background: var(--ocean); color: var(--cream); }
   .benefits .label{ color:#e6b08c; }
@@ -431,6 +447,19 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="video-tour">
+  <div class="section-head" data-reveal>
+    <span class="label">Studio Tour</span>
+    <h2>See it for yourself.</h2>
+    <p>A walkthrough of the Studio — every corner, every detail.</p>
+  </div>
+  <div class="video-wrap" data-reveal>
+    <video controls playsinline preload="metadata" poster="">
+      <source src="video.mp4" type="video/mp4">
+    </video>
   </div>
 </section>
 
