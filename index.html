@@ -241,9 +241,15 @@
   .benefit-item p{ font-size:0.92rem; line-height:1.6; color:rgba(250,246,238,0.68); margin-top:12px; max-width:30ch; margin-inline:auto; }
 
   /* ---------- GALLERY STRIP ---------- */
-  .gallery{ background:var(--cream); }
-  .gallery-strip{ display:grid; grid-template-columns: repeat(4,1fr); gap:14px; }
-  @media(max-width:760px){ .gallery-strip{grid-template-columns:repeat(2,1fr);} }
+  .gallery{ background:var(--cream); padding-inline:0; overflow:hidden; }
+  .gallery-strip{ overflow:hidden; padding:28px 0 40px; }
+  .gallery-track{ display:flex; gap:14px; width:max-content; animation: gallery-scroll 60s linear infinite; }
+  .gallery-strip:hover .gallery-track{ animation-play-state:paused; }
+  .gallery-track .swatch{ width:clamp(220px, 23vw, 340px); flex:none; }
+  .gallery-track .swatch:nth-child(even){ transform:translateY(28px); }
+  .gallery-track .swatch:nth-child(4n+3){ transform:translateY(-12px); }
+  @keyframes gallery-scroll{ from{ transform:translateX(0); } to{ transform:translateX(calc(-50% - 7px)); } }
+  @media(prefers-reduced-motion: reduce){ .gallery-track{ animation:none; } .gallery-strip{ overflow-x:auto; } }
   .swatch{
     aspect-ratio:3/4; border-radius:2px; position:relative; overflow:hidden;
     background: linear-gradient(135deg, var(--sand-deep), var(--sand) 60%);
@@ -253,8 +259,6 @@
   .swatch::after{ content:"Image coming soon"; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color: rgba(36,29,22,0.4); position:relative; z-index:1; }
   .swatch.photo{ background-size:cover; background-position:center; }
   .swatch.photo::before, .swatch.photo::after{ content:none; }
-  .gallery-strip .swatch:nth-child(2){ transform:translateY(28px); }
-  .gallery-strip .swatch:nth-child(4){ transform:translateY(-12px); }
 
   /* ---------- STORY / ABOUT ---------- */
   .story{ background: var(--sand); }
@@ -489,10 +493,12 @@
 
 <section class="gallery">
   <div class="gallery-strip">
-    <div class="swatch photo" data-reveal style="background-image:url('img/gallery-bed.jpg');"></div>
-    <div class="swatch photo" data-reveal style="background-image:url('img/gallery-1.png');"></div>
-    <div class="swatch photo" data-reveal style="background-image:url('img/gallery-shelves.jpg');"></div>
-    <div class="swatch photo" data-reveal style="background-image:url('img/gallery-4.png');"></div>
+    <div class="gallery-track">
+      <div class="swatch photo" style="background-image:url('img/gallery-bed.jpg');"></div>
+      <div class="swatch photo" style="background-image:url('img/gallery-1.png');"></div>
+      <div class="swatch photo" style="background-image:url('img/gallery-shelves.jpg');"></div>
+      <div class="swatch photo" style="background-image:url('img/gallery-4.png');"></div>
+    </div>
   </div>
 </section>
 
@@ -562,6 +568,20 @@
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
   }, {threshold:0.15});
   revealEls.forEach(el=>obs.observe(el));
+
+  // Gallery carousel: repeat the slides to fill the screen, then double the set so the scroll loops seamlessly
+  const galleryTrack = document.querySelector('.gallery-track');
+  if(galleryTrack){
+    const slides = [...galleryTrack.children];
+    const addSet = () => slides.forEach(el=>{
+      const clone = el.cloneNode(true);
+      clone.setAttribute('aria-hidden','true');
+      galleryTrack.appendChild(clone);
+    });
+    const repeats = Math.max(1, Math.ceil(window.innerWidth / galleryTrack.scrollWidth));
+    for(let i=1; i<repeats; i++) addSet();
+    for(let i=0; i<repeats; i++) addSet();
+  }
 
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', ()=>{
